@@ -6,7 +6,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author DARSHAN
  */
-public class SessionServlet extends HttpServlet {
+public class LogOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,34 +31,8 @@ public class SessionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            HttpSession session = request.getSession();
-            /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            
-            // Retrieve or initialize the visit count
-            Integer visitCount = (Integer) session.getAttribute("visitCount");
-            if(session.isNew()){
-                visitCount = 1;
-                session.setAttribute("visitCount", visitCount); 
-            }
-            if (visitCount == null) {
-                visitCount = 1;
-            } else {
-                visitCount++;
-            }
-            session.setAttribute("visitCount", visitCount);
-            
-            // Retrieve name parameter from request
-            String name = request.getParameter("my_name");
-            session.setAttribute("nm", name);
-            
-            // Retrieve session information
-            Date createTime = new Date(session.getCreationTime());
-            Date lastAccess = new Date(session.getLastAccessedTime());
-            String sessionId = session.getId();
-            int maxInactive = session.getMaxInactiveInterval();
-
-            // HTML output with CSS styling
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -88,17 +61,13 @@ public class SessionServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<div class='container'>");
-            out.println("<h1>Session Information</h1>");
+            out.println("<h1>Session Closed</h1>");
             out.println("<table>");
-            out.println("<p align='right'>Session ID: "+sessionId+"</p>");
-//            out.println("<p align='right'>Session ID: "+sessionId+"; Create Time: "+createTime+"; Last Access: "+lastAccess+"; Max Inactive: "+maxInactive+"; Visit Count: "+visitCount+"</p>");
-            out.println("<p align='right'>Create Time: "+createTime+"</p>");
-            out.println("<p align='right'>Last Access: "+lastAccess+"</p>");
-            
-            out.println("<p align='right'>Max Inactive: "+maxInactive+"</p>");
+            String name = (String) session.getAttribute("nm");
+            Integer visitCount = (Integer) session.getAttribute("visitCount");
             out.println("<p align='right'>Visit Count: "+visitCount+"</p>");
-            out.println("<tr><td align='center'>Welcome " + name + "</td></tr>");
-            out.println("<tr><td class=\"form-group\" align='center'><form action=\"LogOut\" method=\"POST\"><input type='submit' value='Log Out'/></form></td></tr>");
+            out.println("<tr><td align='center'>Thank you " + name + "</td></tr>");
+//            out.println("<tr><td class=\"form-group\" align='center'><form action=\"LogOut\" method=\"POST\"><input type='submit' value='Log Out'/></form></td></tr>");
 //            out.println("<tr><td>Creation Time</td><td>" + createTime + "</td></tr>");
 //            out.println("<tr><td>Last Access Time</td><td>" + lastAccess + "</td></tr>");
 //            out.println("<tr><td>Session ID</td><td>" + sessionId + "</td></tr>");
