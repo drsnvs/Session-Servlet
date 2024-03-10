@@ -12,23 +12,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-            HttpSession ssn = request.getSession();
-        %>
-        <form method="POST" action="SessionServlet">
-            <table>
+        
+        <form action="SessionServlet" method="POST" >
+            <table border="1">
+                <tr><th colspan="2">Session</th></tr>
                 <tr>
                     <td>Enter Name: </td>
                     <td><input type="text" name="my_name"></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Submit"</td>
+                    <td colspan="2" align="center"><input type="submit" value="Submit"</td>
                 </tr>
             </table>
         </form>
-        <% 
-            session.setAttribute("nm", request.getParameter("my_name"));
-        %>
+        
         <!--<h1><% // request.getAttribute("name"); %></h1>-->
         
     </body>

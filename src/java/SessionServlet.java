@@ -35,6 +35,13 @@ public class SessionServlet extends HttpServlet {
 //            HttpSession session = request.getSession();
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            Integer count = (Integer)session.getAttribute("count");
+            if(count == null){
+                count = 1;
+            }else{
+                count++;
+            }
+            session.setAttribute("count", count);
             
             session.setAttribute("nm", request.getParameter("my_name"));
             String name = (String) session.getAttribute("nm");
@@ -44,20 +51,31 @@ public class SessionServlet extends HttpServlet {
             Date last_access  = new Date(session.getLastAccessedTime());
             String session_id = new String(session.getId());
             int max_inactive = session.getMaxInactiveInterval();
-            int visitCount = 0;
-            String visitCountKey = new String("visitCount");
+            
+//            int visit = 0;
+//            if(session.isNew()){
+//                visit = 1;
+//            }else{
+//                visit = visit + 1;
+//            }
+            
+            
+            //String visitCountKey = new String("visitCount");
+            //int visitCount = (Integer)session.getAttribute(visitCountKey);
+            
             String userIDKey = new String("userID");
             String userID = new String("ABCD");
             
-            if(session.isNew()){
-                session.setAttribute(userIDKey, userID);
-                
-            }else{
-                visitCount = (Integer)session.getAttribute(visitCountKey);
-                visitCount = visitCount + 1;
-                userID = (String)session.getAttribute(userIDKey);
-            }
-            session.setAttribute(visitCountKey,  visitCount);
+//            if(session.isNew()){
+//                session.setAttribute(userIDKey, userID);
+//                session.setAttribute(visitCountKey, 0); // Set visitCount to 0 when the session is new
+//            }else{
+//                visitCount = (Integer)session.getAttribute(visitCountKey);
+//                visitCount = visitCount + 1;
+//                userID = (String)session.getAttribute(userIDKey);
+//            }
+//
+//            session.setAttribute(visitCountKey,  visitCount);
             
             
             out.println("<!DOCTYPE html>");
@@ -72,7 +90,8 @@ public class SessionServlet extends HttpServlet {
             out.println("<h1>Last access: "+last_access+"</h1>");
             out.println("<h1>Session id: "+session_id+"</h1>");
             out.println("<h1>Max inactive: "+max_inactive+"</h1>");
-            out.println("<h1>Visit: "+visitCount+"</h1>");
+            out.println("<h1>Visit: "+count+"</h1>");
+            //out.println("<h1>Visit: "+visitCount+"</h1>");
             out.println("<h1>Id: "+userID +"</h1>");
             out.println("</body>");
             out.println("</html>");
